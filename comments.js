@@ -1,21 +1,41 @@
 // create web server
+// 1. create a web server
+// 2. create a route to get all comments
+// 3. create a route to get a comment by id
+// 4. create a route to create a comment
+// 5. create a route to update a comment
+// 6. create a route to delete a comment
+
+// 1. create a web server
 const express = require('express');
 const app = express();
-const path = require('path');
-const fs = require('fs');
-const port = 3000;
+app.use(express.json());
 
-// create file
-const commentsPath = path.join(__dirname, 'comments.json');
-
-// read file
-const comments = JSON.parse(fs.readFileSync(commentsPath));
-
-// create a route
+// 2. create a route to get all comments
 app.get('/comments', (req, res) => {
-  res.json(comments);
+    res.send('get all comments');
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+// 3. create a route to get a comment by id
+app.get('/comments/:id', (req, res) => {
+    res.send('get comment by id');
+});
+
+// 4. create a route to create a comment
+app.post('/comments', (req, res) => {
+    res.send('create a comment');
+});
+
+// 5. create a route to update a comment
+app.put('/comments/:id', (req, res) => {
+    res.send('update a comment');
+});
+
+// 6. create a route to delete a comment
+app.delete('/comments/:id', (req, res) => {
+    res.send('delete a comment');
+});
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
 });
