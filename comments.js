@@ -1,24 +1,29 @@
 // create web server
-const express = require('express');
-const app = express();
-const port = 3000;
-
-// create a route
-// app.get('/', (req, res) => {
-//     res.send('Hello World!');
-// });
-
-// create a route
-app.get('/comments', (req, res) => {
-    res.send('This is a comments page');
+// get express module from node_modules
+var express = require('express');
+// create express object
+var app = express();
+// get body-parser module from node_modules
+var bodyParser = require('body-parser');
+// create body parser object
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+// set view engine
+app.set('view engine', 'ejs');
+// set views directory
+app.set('views', './views');
+// listen to port 3000
+app.listen(3000);
+// create comments array
+var comments = [];
+// create route for /comments
+app.get('/comments', function(req, res) {
+    // render comments view
+    res.render('comments', { comments: comments });
 });
-
-// create a route
-app.get('/comments/:commentId', (req, res) => {
-    res.send('This is a comments page with id ' + req.params.commentId);
-});
-
-// start server
-app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`);
+// create route for /addComment
+app.post('/addComment', urlencodedParser, function(req, res) {
+    // add comment to comments array
+    comments.push(req.body);
+    // redirect to /comments
+    res.redirect('/comments');
 });
